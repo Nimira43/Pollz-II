@@ -12,13 +12,16 @@ const pusher = new Pusher({
   useTLS: true
 })
 
-
 router.get('/', (req, res) => {
   res.send('Voting')
 })
 
 router.post('/', (req, res) => {
-
+  pusher.trigger('pollz-2', 'election polls', {
+    points: 1,
+    os: req.body.os
+  })
+  return res.json({success: true, message: 'Thanks for voting'})
 })
 
 module.exports = router
